@@ -53,15 +53,24 @@ class FavoritesArrayFormatter
 	*/
 	private function resetIndexes()
 	{
+		$this->checkCurrentPost();
+
 		foreach ( $this->formatted_favorites as $site => $site_favorites ){
-			// Make older posts compatible with new name
 			if ( !isset($site_favorites['posts']) ) {
 				$site_favorites['posts'] = $site_favorites['site_favorites'];
 				unset($this->formatted_favorites[$site]['site_favorites']);
 			}
 			foreach ( $site_favorites['posts'] as $key => $favorite ){
-				unset($this->formatted_favorites[$site]['posts'][$key]);
-				$this->formatted_favorites[$site]['posts'][$favorite]['post_id'] = $favorite;
+				// If $favorite is already an array (from checkCurrentPost), use the post_id from it
+				if ( is_array($favorite) ) {
+					$post_id = $favorite['post_id'];
+					unset($this->formatted_favorites[$site]['posts'][$key]);
+					$this->formatted_favorites[$site]['posts'][$post_id] = $favorite;
+				} else {
+					// Legacy format: $favorite is the post ID
+					unset($this->formatted_favorites[$site]['posts'][$key]);
+					$this->formatted_favorites[$site]['posts'][$favorite]['post_id'] = $favorite;
+				}
 			}
 			$this->formatted_favorites[$site] = array_reverse($this->formatted_favorites[$site]);
 		}
