@@ -4,8 +4,8 @@ Donate link: http://favoriteposts.com/
 Tags: favorites, like, bookmark, favorite, likes, bookmarks, favourite, favourites, multisite, wishlist, wish list
 Requires at least: 3.8
 Requires PHP: 5.4
-Tested up to: 6.4
-Stable tag: 2.3.4
+Tested up to: 6.8
+Stable tag: 2.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +80,13 @@ As of version 1.1.0, Favorites is compatible with multisite installations. By de
 
 
 == Changelog ==
+
+= 2.3.6 =
+* Adds filter to customize the "Clear Favorites" button text (favorites/clear_favorites_text)
+* Adds filter to customize the "No Favorites" text in a list (favorites/no_favorites_text)
+
+= 2.3.5 =
+* Security update
 
 = 2.3.4 =
 * Tested with WordPress v6.4

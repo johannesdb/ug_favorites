@@ -182,7 +182,7 @@ class SettingsRepository
 		$option = get_option('simplefavorites_display');
 		if ( !isset($option['buttontext']) || $option['buttontext'] == "" ) 
 			return __('Favorite', 'favorites');
-		return esc_html($option['buttontext']);
+		return $this->sanitizeOutput($option['buttontext']);
 	}
 
 	/**
@@ -194,7 +194,7 @@ class SettingsRepository
 		$option = get_option('simplefavorites_display');
 		if ( !isset($option['buttontextfavorited']) || $option['buttontextfavorited'] == "" ) 
 			return __('Favorited', 'favorites');
-		return esc_html($option['buttontextfavorited']);
+		return $this->sanitizeOutput($option['buttontextfavorited']);
 	}
 
 	/**
@@ -206,7 +206,8 @@ class SettingsRepository
 		$option = get_option('simplefavorites_display');
 		if ( !isset($option['clearfavorites']) || $option['clearfavorites'] == "" ) 
 			return __('Clear Favorites', 'favorites');
-		return esc_html($option['clearfavorites']);
+		$text = $this->sanitizeOutput($option['clearfavorites']);
+		return apply_filters('favorites/clear_favorites_text', $text);
 	}
 
 	/**
@@ -265,7 +266,7 @@ class SettingsRepository
 	public function loadingText()
 	{
 		$option = get_option('simplefavorites_display');
-		return ( isset($option['loadingindicator']['text']) ) ? esc_html($option['loadingindicator']['text']) : __('Loading', 'favorites');
+		return ( isset($option['loadingindicator']['text']) ) ? $this->sanitizeOutput($option['loadingindicator']['text']) : __('Loading', 'favorites');
 	}
 
 	/**
@@ -348,7 +349,8 @@ class SettingsRepository
 	public function noFavoritesText()
 	{
 		$option = get_option('simplefavorites_display');
-		return ( isset($option['nofavorites']) && $option['nofavorites'] !== "" ) ? $option['nofavorites'] : __('No Favorites', 'favorites');
+		$text = ( isset($option['nofavorites']) && $option['nofavorites'] !== "" ) ? $option['nofavorites'] : __('No Favorites', 'favorites');
+		return apply_filters('favorites/no_favorites_text', $text);
 	}
 
 	/**
@@ -530,5 +532,24 @@ class SettingsRepository
 		$option = $option['listing'];
 
 		return ( isset($option[$setting]) ) ? $option[$setting] : false;
+	}
+
+	private function sanitizeOutput($output)
+	{
+		$allowed = [
+			'i' => [
+				'class' => true,
+			],
+			'img' => [
+				'class' => true,
+				'src' => true,
+			],
+			'p' => [
+				'class' => true
+			],
+			'strong' => []
+		];
+		$output = wp_kses($output, $allowed);
+		return $output;
 	}
 }
