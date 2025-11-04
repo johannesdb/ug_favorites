@@ -1,16 +1,11 @@
 <?php
-/*
-Plugin Name: Favorites
-Plugin URI: http://favoriteposts.com
-Description: Simple and flexible favorite buttons for any post type.
-Version: 2.3.6
-Author: Kyle Phillips
-Author URI: https://github.com/kylephillips
-Text Domain: favorites
-Domain Path: /languages/
-License: GPLv2 or later.
-Copyright: Kyle Phillips
-*/
+/**
+ * Plugin Name: UG Simple Favorites (Optimized)
+ * Plugin URI: https://github.com/JERES-ORG/favorites
+ * Description: Optimized version - reduced AJAX response size
+ * Version: 3.2.6-optimized
+ * ...
+ */
 
 /*  Copyright 2025 Kyle Phillips
 
